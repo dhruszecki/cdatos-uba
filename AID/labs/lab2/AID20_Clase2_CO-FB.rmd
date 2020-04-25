@@ -1,0 +1,49 @@
+---
+title: "AID Clase 2"
+author: "Cecilia Oliva/Federico Balzarotti"
+date: "25 de abril de 2020"
+---
+```{r echo=TRUE}
+rm(list = ls())                                             # borra el enviroment
+
+Nombre = c("Ana","Luis","Pedro","Juan","Eva","Jorge","Ana") # crea un vector con los nombres
+Edad = c(23,24,22,24,25,27,28)                              # crea un vector con las edades correspondientes 
+Sexo = as.factor(c("F",rep("M",3),"F","M","M"))             # crea un vector como factor con el sexo correspondiente
+levels(Sexo)                       # devuelve los grupos del vector dado como factor
+datos=data.frame(Nombre,Edad,Sexo) # arma un entorno de datos --> Dataframe
+datos 
+```
+
+```{r echo=TRUE}
+#operaciones
+mean(datos$Edad[datos$Sexo=="F"])  # devuelve el promedio de la edad de las mujeres
+datos[datos$Nombre %in% "Ana",]    # filtra el dataframe con las filas de nombre Ana
+datos[order(datos$Edad),]          # ordena el dataframe por la variable edad de menor a mayor
+datos[order(-datos$Edad),]         # ordena el dataframe por la variable edad de mayor a menor
+```
+
+```{r echo=TRUE}
+#tablas de frecuencias
+table(datos[2])                    # devuelve una tabla de frecuencias de la edad
+tabla_edad = as.data.frame(table(datos[2]))    # lo paso a dataframe
+edad_mas_frecuente = tabla_edad[which.max(tabla_edad$Freq),1] #obtengo la edad mas frecuente
+edad_mas_frecuente                 #visualizo el valor y también devuelve los niveles asociados
+```
+
+```{r echo=TRUE}
+#si quiero una tabla de frecuencias con mas de una variable...
+table(datos[2,3])                  #OJO ESTO FALLA
+table(datos[c(2,3)])               #esta esta OK
+#los almaceno en un dataframe
+datos_filtrados = data.frame(table(datos[c(2,3)]))
+#exporto en un csv que se puede ver en excel rapidamente
+write.csv(datos_filtrados,"tabla_de_contingencia.csv")
+```
+
+```{r echo=TRUE}
+#mas zonas de trabajo
+```
+
+```{r echo=TRUE}
+#mas zonas de trabajo
+```
