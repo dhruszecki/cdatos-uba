@@ -1,8 +1,8 @@
 rm(list = ls()) 
 
 library(readxl)
-alumnos_AID_2020 <- read_excel("Datos de alumnos de AID 2020.xlsx")
-View(alumnos_AID_2020)                                                                                                 
+setwd("labs/lab2")
+alumnos_AID_2020 <- read_excel("ds/Datos de alumnos de AID 2020.xlsx")
 
 alumniDF <- data.frame(
   alumnos_AID_2020[, "Comision"],
@@ -13,20 +13,18 @@ alumniDF <- data.frame(
   stringsAsFactors = TRUE
 )
 
-#View(alumnos_AID_2020)                                                                                                 
-
-p <- plot(x = alumniDF$Edad)
+plot(x = alumniDF$Edad)
 hist(x= alumniDF$Edad)
 boxplot(x= alumniDF$Edad)
 
 # 4.1
 freq_titulo <- as.data.frame(table(alumniDF$Titulo2))
-titulo_mas_frecuente <- freq_titulo[witch.max(freq_titulo$Freq),1]
+titulo_mas_frecuente <- freq_titulo[which.max(freq_titulo$Freq),1]
+
 
 # 4.2
 freq_univerdidad <- as.data.frame(table(alumniDF$Universidad2))
-universidad_mas_frecuente <- freq_univerdidad[witch.max(freq_univerdidad$Freq),1]
+universidad_mas_frecuente <- freq_univerdidad[which.max(freq_univerdidad$Freq),1]
 
 # 5
-
-
+barplot(freq_titulo)
