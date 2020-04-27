@@ -4,7 +4,7 @@
 options(repos = c(CRAN = "http://cran.rstudio.com"))
 
 #para fijar el directorio
-setwd("/Users/dario.hruszecki/maestria/AID/labs/lab1") #o bien setwd("C:\\workspace2") #para fijar el directorio
+setwd("labs/lab1") #o bien setwd("C:\\workspace2") #para fijar el directorio
 
 #para saber en qué directorio estamos
 getwd() 

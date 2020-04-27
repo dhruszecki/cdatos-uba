@@ -1,4 +1,7 @@
 .Rproj.user
 .Rhistory
-.RData
+.RData*
 .Ruserdata
+.idea
+*.iml
+.~lock*
