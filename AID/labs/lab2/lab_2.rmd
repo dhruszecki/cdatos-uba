@@ -89,7 +89,13 @@ alumniDF_sistemas <- subset(alumniDF, Titulo2 %in% c("Ing Informatica", "Sistema
 ##### 9. Visualice ambos gráficos a la vez, histograma arriba y boxplot abajo. El boxplot debe quedar horizontal y en la misma escala que el histograma
 
 ```{r}
-hist(alumniDF_sistemas$Edad)
-barplot(alumniDF_sistemas$Edad)
+# Layout to split the screen
+layout(mat = matrix(c(1,2),2,1, byrow=TRUE),  height = c(1,8))
+ 
+# Draw the boxplot and the histogram 
+par(mar=c(0, 3.1, 1.1, 2.1))
+boxplot(alumniDF_sistemas$Edad, horizontal=TRUE , ylim=c(30,70), xaxt="n" , col=rgb(0.8,0.8,0,0.5) , frame=F)
+par(mar=c(4, 3.1, 1.1, 2.1))
+hist(alumniDF_sistemas$Edad, breaks=40 , col=rgb(0.2,0.8,0.5,0.5) , border=F , main="" , xlab="value of the variable", xlim=c(30,70))
 ```
 
