@@ -1,0 +1,88 @@
+---
+title: "Laboratorio 2"
+author: daro
+date: 29/4/20
+output: html_notebook
+---
+```{r include=FALSE}
+rm(list = ls())
+```
+
+## AID
+### Laboratorio 2
+#### Consignas
+##### 2. Crear una data frame tomando el archivo \"alumnos_aid_2020.xlsx\" con las columnas:
+* Comision
+* Titulo2
+* Universidad2
+* Genero
+* Edad
+
+```{r}
+library(readxl)
+library(here)
+alumnos_AID_2020 <- read_excel(here("labs", "lab2","ds", "alumnos_aid_2020.xlsx"))
+alumniDF <- data.frame(
+  alumnos_AID_2020[, "Comision"],
+  alumnos_AID_2020[, "Titulo2"],
+  alumnos_AID_2020[, "Universidad2"],
+  alumnos_AID_2020[, "Genero"],
+  alumnos_AID_2020[, "Edad"],
+  stringsAsFactors = TRUE
+)
+```
+
+##### 3. Visualizar un histograma y un boxplot de la variable “Edad”. Discutir si corresponde a una distribución uniforme. Discutir qué conclusiones se pueden extraer de cada gráfico y en que situaciones utilizaría cada uno.
+
+```{r}
+plot(x = alumniDF$Edad)
+hist(x= alumniDF$Edad)
+boxplot(x= alumniDF$Edad)
+```
+
+
+##### 4.1. ¿Cuál es el título más frecuente de la maestría en 2020?
+
+```{r}
+freq_titulo <- as.data.frame(table(alumniDF$Titulo2))
+titulo_mas_frecuente <- freq_titulo[which.max(freq_titulo$Freq),1]
+```
+
+##### 4.2. ¿Cuál es la universidad más frecuente de la maestría 2020?
+
+```{r}
+freq_univerdidad <- as.data.frame(table(alumniDF$Universidad2))
+universidad_mas_frecuente <- freq_univerdidad[which.max(freq_univerdidad$Freq),1]
+```
+
+##### 5. Graficar en un “Barplot” los 4 títulos más frecuentes con sus respectivas cantidades de alumnos (ver gráfico del apunte teórico pag.28). Las barras deberán estar ordenadas de mayor a menor.
+
+```{r}
+titulos_top4 = freq_titulo[order(freq_titulo$Freq, decreasing=TRUE),][1:4,]
+barplot(titulos_top4$Freq, names.arg = titulos_top4$Var1)
+```
+
+##### 6. Hallar una tabla que contenga las cantidades de alumnos de los 4 títulos más frecuentes, pero también informe las cantidades por cada género (tabla de doble entrada con 4x2 cantidades)
+
+```{r}
+alumniDF_top4 = subset(alumniDF, Titulo2 %in% titulos_top4[,1])
+freq_titulo_genero <- as.data.frame(table(alumniDF_top4$Genero, alumniDF_top4$Titulo2))
+```
+
+##### 7. Realizar un diagrama de barras superpuestas donde figuren las 4 carreras más frecuentes en el eje x,  y aparte, sobre cada barra esté distinguido el género con 2 colores distintos (Idem gráfico del apunte teórico pag.29).
+
+```{r}
+library(ggplot2)
+ggplot(data=freq_titulo_genero , aes( x=Var2 , y=Freq , fill =Var1 ) ) +
+geom_bar (stat = "identity" , colour = "blue" ) +
+scale_fill_brewer (palette = "Paired" ) +
+xlab ( "Título" ) +
+ylab ( "" )
+```
+
+##### 8. Dar una lista de los alumnos que estudiaron "Ing informática" y "Sistemas" de la comisión "C1" y que tengan 30 años o más
+
+```{r}
+alumniDF_sistemas <- subset(alumniDF, Titulo2 %in% c("Ing informática", " Sistemas") & Comision == 'C1')
+```
+
