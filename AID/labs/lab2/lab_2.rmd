@@ -83,6 +83,13 @@ ylab ( "" )
 ##### 8. Dar una lista de los alumnos que estudiaron "Ing informática" y "Sistemas" de la comisión "C1" y que tengan 30 años o más
 
 ```{r}
-alumniDF_sistemas <- subset(alumniDF, Titulo2 %in% c("Ing informática", " Sistemas") & Comision == 'C1')
+alumniDF_sistemas <- subset(alumniDF, Titulo2 %in% c("Ing Informatica", "Sistemas") & Comision == 'C1' & Edad >= 30)
+```
+
+##### 9. Visualice ambos gráficos a la vez, histograma arriba y boxplot abajo. El boxplot debe quedar horizontal y en la misma escala que el histograma
+
+```{r}
+hist(alumniDF_sistemas$Edad)
+barplot(alumniDF_sistemas$Edad)
 ```
 
