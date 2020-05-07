@@ -1,4 +1,4 @@
-data <- read.csv("labs/lab3/ruidoso.txt")
+data <- read.csv(here("labs", "lab3", "ds", "ruidoso.txt")
 
 mean(data$Road_55dB)
 

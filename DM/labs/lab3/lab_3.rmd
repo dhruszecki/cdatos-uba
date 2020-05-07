@@ -1,0 +1,39 @@
+---
+title: "Lab 3 - Outlier"
+author: daro
+date: 6/5/20
+output: html_document
+---
+## LABORATORIO III: Detección de Outliers (Preprocesamiento -Volumen II-)
+### Introducción:
+Esta práctica de laboratorio tiene como objetivo abordar nuevas técnicas correspondientes a la etapa
+de Preprocesamiento del Proceso de Descubrimiento de Conocimiento, puntualmente el análisis, detección y
+tratamiento de valores anómalos (en adelante, outliers).
+Para la exploración de estos temas, se utilizará el IDE R-Studio del lenguaje de programación R, a
+efectos de ejercitar los conceptos abordados en las clases teóricas.
+
+### CONSIGNAS
+A partir del dataset ruidoso.txt, se solicita trabajar sobre las siguientes consignas:
+
+1. SOBRE LOS DATOS
+a. Cargue 1 y explore el dataset: explique en qué consiste el mismo y qué características posee.
+
+```{r}
+library(readr)
+library(here)
+
+ruidoso <- read_csv(here("labs", "lab3", "ds", "ruidoso.txt"))
+mean(data$Road_55dB)
+
+mean(data$Road_60dB)
+
+boxplot(data$Road_55dB)
+```
+
+b. Con las técnicas abordadas en la práctica de laboratorio anterior, realice un breve
+análisis exploratorio para identificar cual es la distribución de sus variables y si
+existe relación entre las mismas
+
+```{r}
+
+```
