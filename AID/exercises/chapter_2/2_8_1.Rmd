@@ -1,0 +1,44 @@
+---
+title: "2.8.1"
+author: "Daro"
+date: "5/2/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ejercicio 1. Transformaciones de datos
+Seis candidatas son evaluadas para el puesto de recepcionista en una empresa, para lo cual se las somete a dos entrevistas. En la primera de ellas, son evaluadas por el responsable del Departamento de Recursos Humanos de la empresa, al cual denominaremos Juez 1, mientras que en la segunda son evaluadas por el responsable del área de la cual van a depender, que llamaremos Juez 2. La asignación de puntajes se basa en los siguientes tópicos: cordialidad, presencia y manejo de idiomas. Los puntajes asignados independientemente por estos jueces son los siguientes:
+
+```{r}
+library(readxl)
+library(here)
+library(knitr)
+puntajes_jueces <- read_excel(here("exercises", "chapter_2","ds", "recepcionistas.xls"))
+#kable(puntajes_jueces)
+```
+
+1. Calcular el promedio por juez de cada una de las aspirantes. ¿Cuál de ellas seleccionaría cada uno de los jueces? ¿Existe coincidencia?
+
+```{r}
+
+```
+
+2. Calcular el promedio de cada una de las aspirantes tomando en cuenta todos los aspectos evaluados y ambos jueces.
+
+3. Transformar las puntuaciones observadas de modo tal que cada una de las seis variables tenga media 0 y dispersión 1. ¿Cuál es el objetivo de esta transformación?
+
+4. Transformar las puntuaciones de modo tal que cada candidata tenga para cada juez media 0 y dispersión 1. ¿Cuál es el objetivo de esta transformación?
+
+5. Graficar los perfiles multivariados de cada u
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
