@@ -1,0 +1,106 @@
+
+“Moneda equilibrada”: Realizar un test de hipótesis para decidir si una moneda está equilibrada o no. Indique cual debería un punto de corte aceptable. Calcule los errores tipo I y tipo II correspondientes
+
+
+```{r }
+rm(list=ls())   #borra eviroment
+graphics.off()  #borra gaficos
+cat("\014")     #borra consola
+
+#H0: la moneda está equilibrada
+#Ha: la moneda NO esta equilibrada
+
+#defino una variable aleatoria pars realizar el muestreo:
+#X: "cantidad de caras al tirar la moneda n veces" Binomial(n,p)
+#si la moneda está perfectamente equilibrada, p=1/2
+
+#defino cantidad de lanzamientos
+n=10
+#¿cual será el punto de corte a establecer para el criterio de decisión?
+#distancia al caso x=n/2
+r =n/2*0.4
+#por ejemplo: si n=10, y r=2, entonces estoy incluyendo a los sucesos X=3 X=4 X=5 X=6 yX=7 dentro de la hipotesis nula
+x = 0:n
+p_eq = 0.5
+plot(x,dbinom(x,n,p_eq),col="blue",ylim=c(0,0.35))+grid()
+```
+
+```{r }
+#calculamos el error tipo I (o alfa)
+
+#usando la acumulada:
+alfa = pbinom(n/2-r-1,n,p_eq)+ 1 - pbinom(n/2+r,n,p_eq)
+#otra forma: usar dbinom y sumarlos
+#alfa_verificacion = sum(dbinom(0:(n/2-r-1),n,p_eq))+sum(dbinom((n/2+r+1):n,n,p_eq))
+```
+
+```{r }
+#calculamos el error tipo II (o beta)
+
+#es necesario definir que tan desequilibrada estaría la moneda. 
+#lo testeo en el limite inferior. Por ejemplo p=0.3
+p_des = 0.2
+#usando la acumulada:
+beta = pbinom(n/2+r,n,p_des) - pbinom(n/2-r-1,n,p_des)
+#otra forma: usar dbinom y sumarlos
+#beta_verificacion = sum(dbinom((n/2-r):(n/2+r),n,p_des))
+```
+
+```{r }
+#distribuciones de una moneda equilibrada y otra desequilibrada
+plot(x,dbinom(x,n,p_eq),col="blue",ylim=c(0,0.35))+
+points(x,dbinom(x,n,p_des),col = "red",)+grid()
+```
+
+```{r }
+#si aumentamos el nro de muestras y testamos con el mismo p_des
+n=20
+x = 0:n
+r =n/2*0.4
+plot(x,dbinom(x,n,p_eq),col="blue",ylim=c(0,0.35))+
+points(x,dbinom(x,n,p_des),col = "red",)+grid()
+alfa = pbinom(n/2-r-1,n,p_eq)+ 1 - pbinom(n/2+r,n,p_eq)
+beta = pbinom(n/2+r,n,p_des) - pbinom(n/2-r-1,n,p_des)
+
+```
+
+```{r }
+#seguimos aumentando la muestra
+n=50
+x = 0:n
+r =n/2*0.4
+plot(x,dbinom(x,n,p_eq),col="blue",ylim=c(0,0.35))+
+points(x,dbinom(x,n,p_des),col = "red",)+grid()
+alfa = pbinom(n/2-r-1,n,p_eq)+ 1 - pbinom(n/2+r,n,p_eq)
+beta = pbinom(n/2+r,n,p_des) - pbinom(n/2-r-1,n,p_des)
+
+```
+
+```{r }
+n=100
+x = 0:n
+r =n/2*0.4
+p_des =0.2
+plot(x,dbinom(x,n,p_eq),col="blue",ylim=c(0,0.35))+
+points(x,dbinom(x,n,p_des),col = "red",)+grid()
+alfa = pbinom(n/2-r-1,n,p_eq)+ 1 - pbinom(n/2+r,n,p_eq)
+beta = pbinom(n/2+r,n,p_des) - pbinom(n/2-r-1,n,p_des)
+
+```
+
+
+```{r }
+n=1000
+x = 0:n
+r =n/2*0.4
+p_des =0.2
+plot(x,dbinom(x,n,p_eq),col="blue",ylim=c(0,0.1))+
+points(x,dbinom(x,n,p_des),col = "red",)+grid()
+alfa = pbinom(n/2-r-1,n,p_eq)+ 1 - pbinom(n/2+r,n,p_eq)
+beta = pbinom(n/2+r,n,p_des) - pbinom(n/2-r-1,n,p_des)
+
+```
+
+```{r }
+
+```

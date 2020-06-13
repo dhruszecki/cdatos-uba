@@ -1,0 +1,164 @@
+```{r setup, include=FALSE}
+cat("\014")
+rm(list = ls())
+```
+
+```{r include=FALSE}
+#recordar instalar los paquetes si no están instalados aún
+library(ca)
+library(FactoMineR)
+library(factoextra)
+library(ggplot2)
+library(here)
+```
+
+```{r echo=TRUE}
+#levando el mismo archivo usado en la clase 4
+library(readxl)
+datos_crudos=read_xlsx(here("labs", "lab8", "ds","montañas_rusas.xlsx"),sheet = 1)
+
+datos_numericos_2 = data.frame(datos_crudos[c(1,8,9,10,12,13,15)])
+datos_completos_2 = datos_numericos_2[complete.cases(datos_numericos_2),]
+#tengo 158, me quedo con este dataset para analizar
+datos = datos_completos_2[c(2:7)]
+```
+
+```{r echo=TRUE}
+# categorizacion de datos
+xs=quantile(datos$Height,seq(0,1,1/3))
+datos$C_Heigh <- cut(datos$Height, breaks=xs,
+                     labels=c("Height_low","Height_middle","Height_high"),
+                     include.lowest = TRUE)
+
+xs=quantile(datos$Speed,seq(0,1,1/3))
+datos$C_Speed <- cut(datos$Speed , breaks=xs,
+                     labels=c("Speed_slow","Speed_middle","Speed_fast"),
+                     include.lowest = TRUE)
+
+xs=quantile(datos$Length,seq(0,1,1/3))
+datos$C_Length <- cut(datos$Length , breaks=xs,
+                      labels=c("Length_short","Length_middle","Length_long"),
+                      include.lowest = TRUE)
+
+#para las inversiones el corte es por valor para separar
+#las que no tienen inversiones estrictamente
+xs=c(-Inf,0,4,Inf)
+datos$C_Numinversions <- cut(datos$Numinversions , breaks=xs,
+                             labels=c("Inv_none","Inv_few","Inv_lots"),
+                             include.lowest = TRUE)
+
+xs=quantile(datos$Duration,seq(0,1,1/3))
+datos$C_Duration <- cut(datos$Duration , breaks=xs,
+                        labels=c("Duration_short","Duration_middle","Duration_long"),
+                        include.lowest = TRUE)
+
+#elijo también arbitrariamente los cortes
+xs=c(-Inf,20,50,Inf)
+datos$C_Age<- cut(2020-datos$Opened , breaks=xs,
+                        labels=c("Age_new","Age_modern","Age_old"),
+                        include.lowest = TRUE)
+
+#generacion de tablas con 2 variables y 3 niveles (analisis de correspondencias simple)
+#elegir alguno de los siguientes
+#df = table(datos$C_Heigh,datos$C_Speed)
+#df = table(datos$C_Length,datos$C_Duration)
+#df = table(datos$C_Heigh,datos$C_Numinversions)
+df = table(datos$C_Age,datos$C_Numinversions)
+
+print(df)
+```
+
+```{r echo=TRUE}
+df.ac = CA(df,graph=FALSE) # Realiza el analisis de correspondencias
+get_ca_row(df.ac) # Muestra lo que se guarda de las filas
+get_ca_col(df.ac) # Muestra l o que se guarda de l as columnas
+```
+
+```{r echo=TRUE}
+# Graficalas categorías de las filas
+fviz_contrib(df.ac,choice="row",axes=1, fill="royalblue",color ="black")
+```
+
+```{r echo=TRUE}
+# Graficalas categorías de las columnas
+fviz_contrib(df.ac,choice="col",axes=1, fill="royalblue",color ="black")+
+theme_gray()+ theme(axis.text.x = element_text(angle=0)) +
+xlab("Nivel de atención")+ylab("Contribuciones (%)") + ggtitle("")
+```
+
+```{r echo=TRUE}
+# Grafica los puntos fila
+fviz_ca_row ( df.ac , repel  =TRUE, col.row="royalblue" ) +
+theme_gray()
+```
+
+```{r echo=TRUE}
+fviz_ca_col( df.ac , repel  =TRUE, col.col = "indianred" ) +
+theme_gray()
+
+```
+
+```{r echo=TRUE}
+fviz_ca_biplot( df.ac , repel  =TRUE, col.row="royalblue",col.col="indianred" ) +
+theme_gray()
+
+```
+
+```{r echo=TRUE}
+# Aplicamos ahora e l paquete ca 
+summary(df.ac)
+df.ac$rowcoord # Arroja las coordenadas del biplot de las filas
+df.ac$colcoord # Arroja las coordenadas del biplot de las columnas
+
+```
+
+```{r echo=TRUE}
+#ahora hacemos un analisis de correspondencias multiple con todas las variables numericas categorizadas
+df_para_acm = datos[7:12]
+df.acm = MCA(df_para_acm , quali.sup=1 , graph=F)
+
+```
+
+```{r echo=TRUE}
+fviz_contrib(df.acm,choice="var",axes=1, fill="royalblue",color ="black")+
+  theme_gray()
+
+```
+
+```{r echo=TRUE}
+fviz_contrib(df.acm,choice="ind",axes=1, fill="royalblue",color ="black")+
+theme_gray()
+
+```
+
+```{r echo=TRUE}
+fviz_mca_var(df.acm,
+             col.var="contrib" , #             col.quali.sup = "black",
+             gradient.cols = c("orange","red"),
+             repel = TRUE)  + 
+  theme_gray()
+
+```
+
+```{r echo=TRUE}
+#matrices analogas para expresar los datos
+library(anacor)
+matriz_de_Burt = burtTable(df_para_acm)         # Calcula la matriz de Burt
+matriz_disyuntiva = tab.disjonctif(df_para_acm) # Calcula la matriz disyuntiva 
+```
+
+```{r echo=TRUE}
+
+```
+
+```{r echo=TRUE}
+
+```
+
+```{r echo=TRUE}
+
+```
+
+```{r echo=TRUE}
+
+```

@@ -1,0 +1,107 @@
+```{r setup, include=FALSE}
+cat("\014")
+rm(list = ls())
+```
+
+```{r include=FALSE}
+#recordar instalar los paquetes si no están instalados aún
+library(ca)
+library(FactoMineR)
+library(factoextra)
+library(ggplot2)
+```
+
+```{r echo=TRUE}
+ # Armamos l a base de datos
+ A1  =c(18,13, 9)
+ A2  =c(13,10, 7)
+ A3  =c( 9, 7 ,5)
+ df  =rbind(A1,A2,A3)
+ colnames(df)=c("B1","B2","B3")
+```
+
+```{r echo=TRUE}
+# otro caso
+# A1  =c(17.77,13.33,8.88)
+# A2  =c(13.33,10   ,6.66)
+# A3  =c( 8.88,6.66 ,4.44)
+# df  =rbind(A1,A2,A3)
+# colnames(df)=c("B1","B2","B3")
+```
+
+```{r echo=TRUE}
+ # #otro caso
+ # A1  =c(10,10,10)
+ # A2  =c(10,10,10)
+ # A3  =c(10,10,10)
+ # df  =rbind(A1,A2,A3)
+ # colnames(df)=c("B1","B2","B3")
+```
+
+```{r echo=TRUE}
+df.ac = CA(df,graph=FALSE) # Realiza el analisis de correspondencias
+#get_ca_row(df.ac) # Muestra lo que se guarda de las filas
+#get_ca_col(df.ac) # Muestra l o que se guarda de l as columnas
+
+```
+
+```{r echo=TRUE}
+# Graficalas categorías de las filas
+fviz_contrib(df.ac,choice="row",axes=1, fill="royalblue",color ="black")
+#theme_gray()+ theme(axis.text.x = element_text(angle=0)) +
+#xlab("X")+ylab("(%)") + ggtitle("")
+```
+
+```{r echo=TRUE}
+# Graficalas categorías de las columnas
+fviz_contrib(df.ac,choice="col",axes=1, fill="royalblue",color ="black")+
+theme_gray()+ theme(axis.text.x = element_text(angle=0)) +
+xlab("Nivel de atención")+ylab("Contribuciones (%)") + ggtitle("")
+```
+
+```{r echo=TRUE}
+# Grafica los puntos fila
+fviz_ca_row ( df.ac , repel  =TRUE, col.row="royalblue" ) +
+theme_gray()
+```
+
+```{r echo=TRUE}
+fviz_ca_col( df.ac , repel  =TRUE, col.col = "indianred" ) +
+theme_gray()
+
+```
+
+```{r echo=TRUE}
+fviz_ca_biplot( df.ac , repel  =TRUE, col.row="royalblue",col.col="indianred" ) +
+theme_gray()
+
+```
+
+```{r echo=TRUE}
+# Aplicamos ahora e l paquete ca 
+summary(df.ac)
+df.ac$rowcoord # Arroja las coordenadas del biplot de las filas
+df.ac$colcoord # Arroja las coordenadas del biplot de las columnas
+
+```
+
+```{r echo=TRUE}
+
+
+```
+
+```{r echo=TRUE}
+
+
+```
+
+```{r echo=TRUE}
+
+
+```
+
+```{r echo=TRUE}
+
+```
+
+
